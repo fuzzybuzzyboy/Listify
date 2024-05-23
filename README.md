@@ -3,8 +3,8 @@ A way to check if your lists are valid to other lists
 
 ## Example:
 
-list: a, b, c, d           
-inputs: a, b, c, d, e, f, g, h
+Database: a, b, c, d           
+Search term: a, b, c, d, e, f, g, h
 
 - Yes: 'a' Is in the list
 - Yes: 'b' Is in the list
