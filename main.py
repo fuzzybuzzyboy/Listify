@@ -4,12 +4,12 @@ loadedfromdatabase=False
 def load_database():
     global database, loadedfromdatabase
     with open('database.txt', 'r') as f: displaydata = f.read().split(', ')
-    if int(input('Do you want to read your database from a file? ' + Fore.YELLOW + '(1: yes, 2: no)' + Fore.RESET+ '\nFile contains:' + Fore.MAGENTA + f'{displaydata}' + Fore.RESET + '\n')) == 1:
+    if int(input('Do you want to read your database from a file? ' + Fore.YELLOW + '(1: yes, 2: no)' + Fore.RESET+ '\nFile contains: ' + Fore.MAGENTA + f'{displaydata}' + Fore.RESET + '\n')) == 1:
         with open('database.txt', 'r') as f: database = f.read().split(', '); loadedfromdatabase=True
     else: pass
 def save_database(database):
     if int(input('\nDo you want to save your database? (1: yes, 2: no)\n')) == 1:
-        os.remove('database.txt')
+        if os.path.exists('database.txt'): os.remove('database.txt')
         with open('database.txt', 'a') as f: f.write(', '.join(database)); f.close()
     else: exit()
 print("Hello, to create a list and to input your inputs, devide each value by an ', '.")
