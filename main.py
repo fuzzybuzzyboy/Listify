@@ -1,6 +1,13 @@
 from local_colorama import *
 import os
 loadedfromdatabase=False
+def case_sesitive(database, searchterm):
+    if int(input('Do you want the search term and database to be non case sensetive? ' + Fore.YELLOW + '(1: yes, 2: no)' + Fore.RESET + '\n')) == 1:
+        case_sesitive=True
+        for i in range(len(database)): database[i] = database[i].lower()
+        for i in range(len(searchterm)): test = searchterm[i]; searchterm[i] = searchterm[i].lower() + f" ({test})"
+    else: case_sesitive = False; pass
+    return database, searchterm, case_sesitive
 def load_database():
     global database, loadedfromdatabase
     with open('database.txt', 'r') as f: displaydata = f.read().split(', ')
@@ -17,8 +24,10 @@ if os.path.exists('database.txt'): load_database()
 if loadedfromdatabase == False: database=input('Database: ').split(', ')
 else: pass
 searchterm=input('Search term: ').split(', ')# ; print(f'{things}\n{thingys}\n')
+database, searchterm, case_sesitive = case_sesitive(database, searchterm)
 for i in range(len(searchterm)):
-    if searchterm[i] in database: print(Fore.GREEN + 'Yes' + Fore.WHITE + ': \'' + Fore.BLUE + f'{searchterm[i]}' + Style.RESET+ '\' Is in the list') 
+    if case_sesitive and searchterm[i].split(f' ({searchterm[i].split(" (")[1].rstrip(")")})')[0] in database: print(Fore.GREEN + 'Yes' + Fore.WHITE + ': \'' + Fore.BLUE + f'{searchterm[i]}' + Style.RESET+ '\' Is in the list') 
+    elif not case_sesitive and searchterm[i] in database: print(Fore.GREEN + 'Yes' + Fore.WHITE + ': \'' + Fore.BLUE + f'{searchterm[i]}' + Style.RESET+ '\' Is in the list') 
     else: print(Fore.RED + ' No' + Fore.WHITE + ': \'' + Style.REVERSE + Fore.BLUE + f'{searchterm[i]}' + Style.RESET + '\' Is not in the list')
 
-if loadedfromdatabase==False: save_database(database)
+if not loadedfromdatabase: save_database(database)
